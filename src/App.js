@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+//Styles
+import "./App.css";
+
+//Dependencies
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+//Components
+import Header from "./components/Header";
+import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
+
+import { ContextProvider } from "./context/TareasContext";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContextProvider>
+      <Router>
+        <Header />
+        <Container>
+          <Switch>
+            <Route exact path="/" component={TaskList} />
+            <Route exact path="/agregar" component={TaskForm} />
+            <Route exact path="/editar/:id" component={TaskForm} />
+          </Switch>
+        </Container>
+      </Router>
+    </ContextProvider>
   );
 }
 
