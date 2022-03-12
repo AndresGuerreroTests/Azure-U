@@ -15,7 +15,6 @@
         <li><a href="#correr-aplicación-de-manera-local">Correr aplicación de manera local </a></li>
       </ul>
     </li>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
