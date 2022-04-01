@@ -12,7 +12,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-weight: 400;
-  color: black;
+  color: gray;
 
   & span {
     font-weight: bold;
