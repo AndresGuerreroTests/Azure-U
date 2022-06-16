@@ -95,7 +95,7 @@ const TaskList = () => {
   return (
     <Container>
       {tasks.length !== 0 ? (
-        <Table>
+        <Table data-cy="tabla-tareas">
           <thead>
             <tr>
               <th>Tarea</th>
@@ -107,8 +107,13 @@ const TaskList = () => {
           <Tbody>
             {tasks.map((tarea) => (
               <tr key={tarea.id}>
-                <td className={tarea.done ? "complete" : ""}>{tarea.title}</td>
-                <td name="descripcion">
+                <td
+                  className={tarea.done ? "complete" : ""}
+                  data-cy="td-titulo"
+                >
+                  {tarea.title}
+                </td>
+                <td name="descripcion" data-cy="td-descripcion">
                   <div className={tarea.done ? "complete" : ""}>
                     {tarea.description}
                   </div>
@@ -117,6 +122,7 @@ const TaskList = () => {
                   <ButtonState
                     className={tarea.done ? "Completada" : "Incompleto"}
                     onClick={() => editState(tarea)}
+                    data-cy="boton-estado"
                   >
                     {tarea.done ? "Completada" : "Incompleto"}
                   </ButtonState>
@@ -129,6 +135,7 @@ const TaskList = () => {
                     onClick={() => {
                       deleteTask(tarea.id);
                     }}
+                    data-cy="boton-eliminar"
                   >
                     Eliminar
                   </Button>

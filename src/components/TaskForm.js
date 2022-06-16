@@ -108,13 +108,14 @@ const TaskForm = () => {
 
   return (
     <Container>
-      <Form onSubmit={hanldeSubmit}>
+      <Form onSubmit={hanldeSubmit} data-cy="form-nueva-tarea">
         <Input
           type="text"
           name="title"
           value={title}
           onChange={hanldeChange}
           placeholder="Nombre de Tarea"
+          data-cy="titulo-input"
         />
         <Input
           type="text"
@@ -122,8 +123,11 @@ const TaskForm = () => {
           value={description}
           onChange={hanldeChange}
           placeholder="Descripción"
+          data-cy="descripcion-input"
         />
-        <Button>{tareas.id ? "Editar tarea" : "Crear tarea"}</Button>
+        <Button data-cy="boton-form-tarea">
+          {tareas.id ? "Editar tarea" : "Crear tarea"}{" "}
+        </Button>
       </Form>
     </Container>
   );

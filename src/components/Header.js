@@ -61,7 +61,7 @@ const Header = () => {
       </Container>
       <AddContainer>
         <Link to="/agregar">
-          <Button>Agregar Tarea</Button>
+        <Button data-cy="boton-nueva-tarea">Agregar Tarea</Button>
         </Link>
       </AddContainer>
     </div>
