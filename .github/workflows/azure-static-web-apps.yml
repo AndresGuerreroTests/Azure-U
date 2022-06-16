@@ -1,0 +1,77 @@
+name: Azure-Static-Web-Apps-CI/CD
+
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+    tests:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 1
+        - uses: actions/setup-node@v2
+          with:   
+            node-version: "16"
+        - name: Install dependencies
+          run: npm install --no-audit --no-fund --no-optional
+        - name: Build
+          run: npm run build
+        - name : Tests 
+          uses: cypress-io/github-action@v4
+          with: 
+            command: npm run test:e2e
+            start: npm run start
+            wait-on: http://localhost:3000
+
+    merge-branch:
+      needs: [tests]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: everlytic/branch-merge@1.1.2
+          with:
+            github_token: ${{ github.token }}
+            source_ref: ${{ github.ref }}
+            target_branch: 'main'
+            commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+
+    build_and_deploy_job:
+      needs: [merge-branch]
+      if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+      runs-on: ubuntu-latest
+      name: Build and Deploy Job
+      steps:
+        - uses: actions/checkout@v2
+          with:
+            submodules: true
+        - name: Build And Deploy
+          id: builddeploy
+          uses: Azure/static-web-apps-deploy@v1
+          with:
+            azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_FLOWER_070B81510 }}
+            repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+            action: "upload"
+            ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+            # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+            app_location: "/" # App source code path
+            api_location: "" # Api source code path - optional
+            output_location: "build" # Built app content directory - optional
+            ###### End of Repository/Build Configurations ######
+
+    close_pull_request_job:
+      if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      runs-on: ubuntu-latest
+      name: Close Pull Request Job
+      steps:
+        - name: Close Pull Request
+          id: closepullrequest
+          uses: Azure/static-web-apps-deploy@v1
+          with:
+            azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_FLOWER_070B81510 }}
+            action: "close"
