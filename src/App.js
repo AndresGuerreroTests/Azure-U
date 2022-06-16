@@ -18,6 +18,10 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const TextMain = styled.p`
+  text-align:center;
+`
+
 function App() {
   return (
     <ContextProvider>
@@ -30,6 +34,7 @@ function App() {
             <Route exact path="/editar/:id" component={TaskForm} />
           </Switch>
         </Container>
+        <TextMain>Creado por:</TextMain>
       </Router>
     </ContextProvider>
   );
