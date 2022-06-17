@@ -19,8 +19,8 @@ const Container = styled.div`
 `;
 
 const TextMain = styled.p`
-  text-align:center;
-`
+  text-align: center;
+`;
 
 function App() {
   return (
