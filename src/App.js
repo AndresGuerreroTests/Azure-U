@@ -34,7 +34,7 @@ function App() {
             <Route exact path="/editar/:id" component={TaskForm} />
           </Switch>
         </Container>
-        <TextMain></TextMain>
+        <TextMain>Creado por: </TextMain>
       </Router>
     </ContextProvider>
   );
